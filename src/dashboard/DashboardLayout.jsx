@@ -85,7 +85,7 @@ function DashboardLayout() {
                 </ul>
             </aside>
             <main className="bg-gray-100 p-8">
-                <h1 className="text-2xl font-bold mb-4">Main Content</h1>
+                <h1 className="text-2xl font-bold mb-4">Main Content - master</h1>
                 <Outlet />
             </main>
         </div>
