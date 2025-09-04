@@ -5,6 +5,7 @@ import Dashboard from './dashboard/Dashboard';
 import Login from './pages/Login';
 import Notfound from './pages/Notfound';
 import Products from './dashboard/Products';
+import Create from './dashboard/Create';
 
 
 
@@ -17,8 +18,10 @@ function App() {
       <Routes>
 
         <Route path='/' element={<DashboardLayout />}>
-            <Route index element={<Dashboard />} />
-            <Route path='products' element={<Products />} />
+          <Route index element={<Dashboard />} />
+          <Route path='products' element={<Products />} />
+          <Route path='products/create' element={<Create />} />
+
         </Route>
 
 
