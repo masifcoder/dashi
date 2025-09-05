@@ -62,7 +62,7 @@ const Products = () => {
                 <td className="px-4 py-2 text-green-600 font-semibold">${product.price}</td>
                 <td className="px-4 py-2">
                   <Link className="bg-blue-600 hover:bg-blue-700 text-white px-3 me-2 py-1 rounded">View</Link>
-                  <Link className="bg-yellow-600 hover:bg-yellow-700 text-white px-3 me-2 py-1 rounded">Edit</Link>
+                  <Link to={`edit/${product.id}`} className="bg-yellow-600 hover:bg-yellow-700 text-white px-3 me-2 py-1 rounded">Edit</Link>
                   <Link onClick={() => handleDelete(product.id)} className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">Del</Link>
                 </td>
               </tr>
