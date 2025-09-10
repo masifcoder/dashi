@@ -9,13 +9,18 @@ import {
     Boxes,
     FileText,
     Bell,
-    Settings,
-    SquarePlus
+
+    SquarePlus,
+    LogOut
     
 } from 'lucide-react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import AuthContext from '../context/AuthContext';
 
 const Sidebar = () => {
+    const {logout} = useContext(AuthContext);
+
     return (
         <ul className="space-y-2">
             <li>
@@ -81,9 +86,9 @@ const Sidebar = () => {
                 </Link>
             </li>
             <li>
-                <Link to="/settings" className="flex items-center gap-3 py-2 px-4 rounded hover:bg-gray-700">
-                    <Settings size={20} />
-                    <span>Settings</span>
+                <Link onClick={logout} className="flex items-center gap-3 py-2 px-4 rounded hover:bg-gray-700">
+                    <LogOut size={20} />
+                    <span>Logout</span>
                 </Link>
             </li>
         </ul>
