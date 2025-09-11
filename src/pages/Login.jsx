@@ -1,14 +1,15 @@
 
 
 
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { Form, Input, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 
-
-
 const Login = () => {
+  const { token, user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
   const { login } = useContext(AuthContext);
   const [error, setError] = useState(null);
@@ -27,6 +28,12 @@ const Login = () => {
     }
 
   };
+
+  useEffect(() => {
+    if (token && user) {
+      navigate('/');
+    }
+  }, [token, user]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">

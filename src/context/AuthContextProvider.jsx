@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import AuthContext from "./AuthContext";
 import axios from "axios";
@@ -8,7 +8,18 @@ import axios from "axios";
 const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    const storedUser = localStorage.getItem("user");
+
+    if (storedToken && storedUser) {
+      setToken(storedToken);
+      setUser(storedUser);
+    }
+    setLoading(false);
+  }, []);
 
 
   // login
@@ -23,7 +34,7 @@ const AuthContextProvider = ({ children }) => {
 
       // local storage
       localStorage.setItem("token", data.token);
-      localStorage.setItem("user", data.user);
+      localStorage.setItem("user", JSON.stringify(data.user));
 
       // states update
       setUser(data.user);
@@ -52,7 +63,7 @@ const AuthContextProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ login, user, token, loading, logout }}>
+    <AuthContext.Provider value={{ login, user, token, setUser, setToken, loading, logout }}>
       {children}
     </AuthContext.Provider>
   )
