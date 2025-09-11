@@ -11,6 +11,7 @@ import AuthContext from '../context/AuthContext';
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const { login } = useContext(AuthContext);
+  const [error, setError] = useState(null);
 
   const navigator = useNavigate();
 
@@ -21,6 +22,8 @@ const Login = () => {
 
     if (result.status == "OK") {
       navigator("/");
+    } else {
+      setError("Invalid login credentials or You are not authorized to access this resource.");
     }
 
   };
@@ -53,6 +56,8 @@ const Login = () => {
           >
             <Input.Password />
           </Form.Item>
+
+          {error && <div className="mb-4 text-red-500">{error}</div>}
 
           <Form.Item>
             <Button type="primary" htmlType="submit" className="w-full" loading={loading}>

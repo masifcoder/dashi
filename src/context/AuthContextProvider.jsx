@@ -16,7 +16,7 @@ const AuthContextProvider = ({ children }) => {
     setLoading(true);
     try {
 
-      const response = await axios.post("http://localhost:9001/user/login", credentials);
+      const response = await axios.post("http://localhost:9001/user/admin-login", credentials);
 
       const data = response.data;
 

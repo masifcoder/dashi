@@ -4,16 +4,23 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Spin } from 'antd';
+import { configConsumerProps } from "antd/es/config-provider";
 
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  // Get token from localStorage or context if available
+  const token = localStorage.getItem("token");
 
 
   const handleDelete = (id) => {
     setLoading(true);
-    axios.delete(`https://68b917c2b71540504329f30a.mockapi.io/api/products/${id}`)
+    axios.delete(`http://localhost:9001/product/delete/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
       .then((response) => {
         getAllProducts();
       }).finally(() => setLoading(false));
@@ -22,9 +29,13 @@ const Products = () => {
 
   const getAllProducts = () => {
     setLoading(true);
-    axios.get('https://68b917c2b71540504329f30a.mockapi.io/api/products')
+    axios.get('http://localhost:9001/product/all')
       .then((response) => {
-        setProducts(response.data);
+
+        console.log(response);
+
+        setProducts(response.data.products);
+
       }).finally(() => setLoading(false));
   }
 
@@ -47,7 +58,8 @@ const Products = () => {
           <thead className="bg-gray-100">
             <tr>
               <th className="px-4 py-2 text-left">Image</th>
-              <th className="px-4 py-2 text-left">Title</th>
+              <th className="px-4 py-2 text-left">Product Name</th>
+              <th className="px-4 py-2 text-left">Model</th>
               <th className="px-4 py-2 text-left">Price</th>
               <th className="px-4 py-2 text-left">Action</th>
             </tr>
@@ -56,14 +68,16 @@ const Products = () => {
             {products.map(product => (
               <tr key={product.id} className="border-b hover:bg-gray-50">
                 <td className="px-4 py-2">
-                  <img src={product.image} alt={product.name} className="h-12 w-12 object-contain rounded" />
+                  {/* <img src={product.image} alt={product.name} className="h-12 w-12 object-contain rounded" /> */}
+                  ----
                 </td>
                 <td className="px-4 py-2 font-medium text-gray-800 max-w-xs truncate">{product.name}</td>
+                <td className="px-4 py-2 font-medium text-gray-800 max-w-xs truncate">{product.model}</td>
                 <td className="px-4 py-2 text-green-600 font-semibold">${product.price}</td>
                 <td className="px-4 py-2">
                   <Link className="bg-blue-600 hover:bg-blue-700 text-white px-3 me-2 py-1 rounded">View</Link>
                   <Link to={`edit/${product.id}`} className="bg-yellow-600 hover:bg-yellow-700 text-white px-3 me-2 py-1 rounded">Edit</Link>
-                  <Link onClick={() => handleDelete(product.id)} className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">Del</Link>
+                  <Link onClick={() => handleDelete(product._id)} className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">Del</Link>
                 </td>
               </tr>
             ))}
