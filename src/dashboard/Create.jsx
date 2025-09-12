@@ -1,14 +1,16 @@
 
 
 import { Button, Form, Input, InputNumber } from 'antd';
-import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import restClient from '../services/restClient';
 const { TextArea } = Input;
+
 
 const Create = () => {
 
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     const navigator = useNavigate();
 
@@ -16,16 +18,17 @@ const Create = () => {
 
     const onFinish = (values) => {
         setLoading(true);
-        axios.post('https://68b917c2b71540504329f30a.mockapi.io/api/products',  values).then(function (response) {
-               
-                    navigator('/products');
+        restClient.post('/product/create', values).then(function (response) {
 
-            }).catch(function (error) {
-                console.log(error);
+            navigator('/products');
 
-            }).finally( () => {
-                setLoading(false);
-            });
+        }).catch(function (error) {
+            console.log(error);
+            setError(error.response?.data?.message || "Something went wrong. Please try again later.");
+
+        }).finally(() => {
+            setLoading(false);
+        });
 
 
 
@@ -95,7 +98,7 @@ const Create = () => {
                     <TextArea rows={4} placeholder="maxLength is 6" />
                 </Form.Item>
 
-
+                {error && <div className="mb-4 text-red-500">{error}</div>}
 
                 <Form.Item label={null}>
                     <Button type="primary" htmlType="submit" loading={loading}>

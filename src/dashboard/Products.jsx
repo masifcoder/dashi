@@ -1,10 +1,9 @@
 
 
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Spin } from 'antd';
-import { configConsumerProps } from "antd/es/config-provider";
+import restClient from "../services/restClient";
 
 
 const Products = () => {
@@ -16,11 +15,7 @@ const Products = () => {
 
   const handleDelete = (id) => {
     setLoading(true);
-    axios.delete(`http://localhost:9001/product/delete/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
+    restClient.delete(`/product/delete/${id}`)
       .then((response) => {
         getAllProducts();
       }).finally(() => setLoading(false));
@@ -29,7 +24,7 @@ const Products = () => {
 
   const getAllProducts = () => {
     setLoading(true);
-    axios.get('http://localhost:9001/product/all')
+    restClient.get('/product/all')
       .then((response) => {
 
         console.log(response);
@@ -66,7 +61,7 @@ const Products = () => {
           </thead>
           <tbody>
             {products.map(product => (
-              <tr key={product.id} className="border-b hover:bg-gray-50">
+              <tr key={product._id} className="border-b hover:bg-gray-50">
                 <td className="px-4 py-2">
                   {/* <img src={product.image} alt={product.name} className="h-12 w-12 object-contain rounded" /> */}
                   ----
