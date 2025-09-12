@@ -17,7 +17,7 @@ function DashboardLayout() {
                 <Sidebar />
             </aside>
             <main className="bg-gray-100 p-8">
-                <h1 className="text-2xl font-bold mb-4">Welcome {user}  On Your Dashboard</h1>
+                <h1 className="text-2xl font-bold mb-4">Welcome {user}  On Your Dashboard uuu</h1>
                 <Outlet />
             </main>
         </div>
